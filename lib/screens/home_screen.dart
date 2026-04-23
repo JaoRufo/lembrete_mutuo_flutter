@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Image.asset(
           'lib/assets/logo-lembrete-mutuo-new.png',
           height: 48,
-          errorBuilder: (_, __, ___) =>
+          errorBuilder: (ctx, err, stack) =>
               const Icon(Icons.monetization_on, color: _purple, size: 48),
         ),
         const SizedBox(width: 12),
@@ -161,10 +161,10 @@ class _HomeScreenState extends State<HomeScreen> {
           end: Alignment.bottomRight,
         ),
         borderRadius: BorderRadius.circular(24),
-        border: Border.all(color: accentColor.withOpacity(0.3), width: 1),
+        border: Border.all(color: accentColor.withValues(alpha: 0.3), width: 1),
         boxShadow: [
           BoxShadow(
-            color: accentColor.withOpacity(0.15),
+            color: accentColor.withValues(alpha: 0.15),
             blurRadius: 20,
             spreadRadius: 2,
           ),
@@ -218,7 +218,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: accentColor.withOpacity(0.1),
+                color: accentColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Text(
@@ -239,9 +239,9 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 60,
           height: 60,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.15),
+            color: color.withValues(alpha: 0.15),
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: color.withOpacity(0.3)),
+            border: Border.all(color: color.withValues(alpha: 0.3)),
           ),
           alignment: Alignment.center,
           child: Text(
@@ -282,7 +282,7 @@ class _HomeScreenState extends State<HomeScreen> {
       decoration: BoxDecoration(
         color: _card,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _purple.withOpacity(0.2)),
+        border: Border.all(color: _purple.withValues(alpha: 0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -315,9 +315,9 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(
-                color: _purple.withOpacity(0.1),
+                color: _purple.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: _purple.withOpacity(0.4)),
+                border: Border.all(color: _purple.withValues(alpha: 0.4)),
               ),
               child: Row(
                 children: [
@@ -345,7 +345,7 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: selectedDate != null ? registerPayment : null,
               style: ElevatedButton.styleFrom(
                 backgroundColor: _purple,
-                disabledBackgroundColor: _purple.withOpacity(0.3),
+                disabledBackgroundColor: _purple.withValues(alpha: 0.3),
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 14),
                 shape: RoundedRectangleBorder(

@@ -6,7 +6,11 @@ class HistoryModal extends StatefulWidget {
   final List<Payment> payments;
   final Future<void> Function(int index) onDelete;
 
-  const HistoryModal({super.key, required this.payments, required this.onDelete});
+  const HistoryModal({
+    super.key,
+    required this.payments,
+    required this.onDelete,
+  });
 
   @override
   State<HistoryModal> createState() => _HistoryModalState();
@@ -27,6 +31,39 @@ class _HistoryModalState extends State<HistoryModal> {
   }
 
   Future<void> _delete(int itemIndex) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A2E),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Excluir registro',
+          style: TextStyle(color: Colors.white),
+        ),
+        content: const Text(
+          'Tem certeza que deseja excluir este pagamento?',
+          style: TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(color: Colors.white54),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text(
+              'Excluir',
+              style: TextStyle(color: Colors.redAccent),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
     final originalIndex = _payments.length - 1 - (page * pageSize + itemIndex);
     await widget.onDelete(originalIndex);
     setState(() {
@@ -42,7 +79,9 @@ class _HistoryModalState extends State<HistoryModal> {
     final start = page * pageSize;
     final end = (start + pageSize).clamp(0, reversed.length);
     final items = reversed.sublist(start, end);
-    final totalPages = (_payments.isEmpty ? 1 : (_payments.length / pageSize).ceil());
+    final totalPages = (_payments.isEmpty
+        ? 1
+        : (_payments.length / pageSize).ceil());
 
     return Dialog(
       backgroundColor: const Color(0xFF0F0F1A),
@@ -60,12 +99,20 @@ class _HistoryModalState extends State<HistoryModal> {
                 const Expanded(
                   child: Text(
                     'Histórico de Pagamentos',
-                    style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 IconButton(
                   onPressed: () => Navigator.pop(context),
-                  icon: const Icon(Icons.close, color: Colors.white54, size: 20),
+                  icon: const Icon(
+                    Icons.close,
+                    color: Colors.white54,
+                    size: 20,
+                  ),
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                 ),
@@ -73,11 +120,13 @@ class _HistoryModalState extends State<HistoryModal> {
             ),
             const SizedBox(height: 12),
 
-            // Lista com altura máxima para não estourar a tela
             if (items.isEmpty)
               const Padding(
                 padding: EdgeInsets.all(24),
-                child: Text('Nenhum pagamento registrado', style: TextStyle(color: Colors.white38)),
+                child: Text(
+                  'Nenhum pagamento registrado',
+                  style: TextStyle(color: Colors.white38),
+                ),
               )
             else
               ConstrainedBox(
@@ -91,11 +140,16 @@ class _HistoryModalState extends State<HistoryModal> {
                     final globalNumber = start + i + 1;
                     return Container(
                       margin: const EdgeInsets.only(bottom: 8),
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 10,
+                      ),
                       decoration: BoxDecoration(
                         color: _card,
                         borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: _purple.withOpacity(0.2)),
+                        border: Border.all(
+                          color: _purple.withValues(alpha: 0.2),
+                        ),
                       ),
                       child: Row(
                         children: [
@@ -103,27 +157,42 @@ class _HistoryModalState extends State<HistoryModal> {
                             width: 28,
                             height: 28,
                             decoration: BoxDecoration(
-                              color: _purple.withOpacity(0.2),
+                              color: _purple.withValues(alpha: 0.2),
                               shape: BoxShape.circle,
                             ),
                             alignment: Alignment.center,
                             child: Text(
                               '$globalNumber',
-                              style: const TextStyle(color: _purple, fontSize: 12, fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                color: _purple,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                           const SizedBox(width: 10),
-                          const Icon(Icons.check_circle, color: Colors.greenAccent, size: 16),
+                          const Icon(
+                            Icons.check_circle,
+                            color: Colors.greenAccent,
+                            size: 16,
+                          ),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               DateFormat('dd/MM/yyyy').format(items[i].date),
-                              style: const TextStyle(color: Colors.white, fontSize: 14),
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                              ),
                             ),
                           ),
                           IconButton(
                             onPressed: () => _delete(i),
-                            icon: const Icon(Icons.delete_outline, color: Colors.redAccent, size: 20),
+                            icon: const Icon(
+                              Icons.delete_outline,
+                              color: Colors.redAccent,
+                              size: 20,
+                            ),
                             padding: EdgeInsets.zero,
                             constraints: const BoxConstraints(),
                             tooltip: 'Excluir',
@@ -152,7 +221,9 @@ class _HistoryModalState extends State<HistoryModal> {
                     style: const TextStyle(color: Colors.white54, fontSize: 13),
                   ),
                   IconButton(
-                    onPressed: page < totalPages - 1 ? () => setState(() => page++) : null,
+                    onPressed: page < totalPages - 1
+                        ? () => setState(() => page++)
+                        : null,
                     icon: const Icon(Icons.chevron_right),
                     color: _purple,
                     disabledColor: Colors.white12,

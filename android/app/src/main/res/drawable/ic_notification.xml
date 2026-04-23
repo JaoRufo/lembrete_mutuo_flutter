@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Sino de notificação monocromático -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,2C10.9,2 10,2.9 10,4C10,4.1 10,4.2 10.01,4.3C7.7,4.9 6,7 6,9.5L6,14L4,16L4,17L20,17L20,16L18,14L18,9.5C18,7 16.3,4.9 14,4.3C14,4.2 14,4.1 14,4C14,2.9 13.1,2 12,2Z"/>
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M12,22C13.1,22 14,21.1 14,20L10,20C10,21.1 10.9,22 12,22Z"/>
+</vector>

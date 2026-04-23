@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
@@ -12,7 +13,8 @@ class NotificationService {
       channelDescription: 'Notificações de vencimento do mútuo',
       importance: Importance.max,
       priority: Priority.max,
-      icon: '@mipmap/ic_launcher',
+      icon: '@drawable/ic_notification',
+      color: Color(0xFF6C63FF),
     ),
   );
 
