@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static const _purple = Color(0xFF6C63FF);
   static const _pink = Color(0xFFFF6584);
-  static const _orange = Color(0xFFFFB347);
+  // static const _orange = Color(0xFFFFB347);
   static const _bg = Color(0xFF0F0F1A);
   static const _card = Color(0xFF1A1A2E);
 
