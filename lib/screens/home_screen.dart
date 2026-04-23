@@ -61,6 +61,40 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> registerPayment() async {
     if (selectedDate == null) return;
+
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        backgroundColor: const Color(0xFF1A1A2E),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+        title: const Text(
+          'Confirmar pagamento',
+          style: TextStyle(color: Colors.white),
+        ),
+        content: Text(
+          'Registrar pagamento em ${DateFormat('dd/MM/yyyy').format(selectedDate!)}?',
+          style: const TextStyle(color: Colors.white70),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, false),
+            child: const Text(
+              'Cancelar',
+              style: TextStyle(color: Colors.white54),
+            ),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(ctx, true),
+            child: const Text(
+              'Confirmar',
+              style: TextStyle(color: Color(0xFF6C63FF)),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
     payments.add(Payment(date: selectedDate!));
     await storage.savePayments(payments);
     final nextDate = DateTime(
@@ -100,7 +134,7 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 12),
               _buildHistoryButton(),
               const SizedBox(height: 12),
-              _buildTestNotificationsButton(),
+              // _buildTestNotificationsButton(),
             ],
           ),
         ),
@@ -385,34 +419,34 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildTestNotificationsButton() {
-    return SizedBox(
-      width: double.infinity,
-      child: OutlinedButton.icon(
-        onPressed: () async {
-          await notifier.requestExactAlarmPermission();
-          await notifier.scheduleTestNotifications();
-          if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('3 notificações agendadas: 10s, 20s e 30s'),
-              backgroundColor: Color(0xFF1A1A2E),
-            ),
-          );
-        },
-        icon: const Icon(Icons.notifications_active, color: _orange),
-        label: const Text(
-          'Testar Notificações',
-          style: TextStyle(color: _orange),
-        ),
-        style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: _orange),
-          padding: const EdgeInsets.symmetric(vertical: 14),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-      ),
-    );
-  }
+  // Widget _buildTestNotificationsButton() {
+  //   return SizedBox(
+  //     width: double.infinity,
+  //     child: OutlinedButton.icon(
+  //       onPressed: () async {
+  //         await notifier.requestExactAlarmPermission();
+  //         await notifier.scheduleTestNotifications();
+  //         if (!mounted) return;
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           const SnackBar(
+  //             content: Text('3 notificações agendadas: 10s, 20s e 30s'),
+  //             backgroundColor: Color(0xFF1A1A2E),
+  //           ),
+  //         );
+  //       },
+  //       icon: const Icon(Icons.notifications_active, color: _orange),
+  //       label: const Text(
+  //         'Testar Notificações',
+  //         style: TextStyle(color: _orange),
+  //       ),
+  //       style: OutlinedButton.styleFrom(
+  //         side: const BorderSide(color: _orange),
+  //         padding: const EdgeInsets.symmetric(vertical: 14),
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(12),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

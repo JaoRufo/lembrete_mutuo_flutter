@@ -13,7 +13,7 @@ class NotificationService {
       channelDescription: 'Notificações de vencimento do mútuo',
       importance: Importance.max,
       priority: Priority.max,
-      icon: '@drawable/ic_notification',
+      icon: '@mipmap/ic_launcher',
       color: Color(0xFF6C63FF),
     ),
   );
